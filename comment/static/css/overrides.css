@@ -1,0 +1,5 @@
+input .override-input {
+    appearance: unset;
+    -webkit-appearance: unset;
+    -moz-appearance: unset;
+}

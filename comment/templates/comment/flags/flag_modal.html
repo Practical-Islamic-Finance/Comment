@@ -14,7 +14,7 @@
                 <form class="flag-modal-form">
                     {% for reason in reasons %}
                     <label>
-                        <input class="mr-2 flag-reason {% if forloop.last %}flag-last-reason{% endif %}" type="radio" value="{{ reason.value }}" name="reason" required>{{ reason.reason }}
+                        <input class="override-input mr-2 flag-reason {% if forloop.last %}flag-last-reason{% endif %}" type="radio" value="{{ reason.value }}" name="reason" required>{{ reason.reason }}
                     </label><br>
                     {% endfor %}
                     <textarea class="flag-modal-info" rows="10" cols="10" name="info"></textarea>
