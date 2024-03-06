@@ -10,6 +10,7 @@
 </div>
 {% if allowed_flags %}
     {% include "comment/flags/flag_modal.html" %}
+    {% include "comment/flags/flags.html" %}
 {% endif %}
 {% if is_subscription_allowed %}
     {% include 'comment/follow/follow_modal.html' %}
