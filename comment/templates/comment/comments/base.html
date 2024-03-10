@@ -14,7 +14,7 @@
         {% include "comment/comments/messages.html" %}
     {% endblock comment_messages %}
     <div class="js-comment comment mb-5">
-        {% trans 'comment on this post...' as parent_placeholder %}
+        {% trans 'Share your thoughts on this asset...' as parent_placeholder %}
         {% include 'comment/comments/create_comment.html' with placeholder=parent_placeholder comment=None %}
     </div>
     <div class="mt-5">

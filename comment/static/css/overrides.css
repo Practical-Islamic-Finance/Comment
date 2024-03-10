@@ -1,5 +1,50 @@
-input .override-input {
-    appearance: unset;
-    -webkit-appearance: unset;
-    -moz-appearance: unset;
+.comments-section input[type="radio"] {
+  -webkit-appearance: radio;
+  -moz-appearance: radio;
+  appearance: radio;
 }
+
+
+/* Targeting the flag icon's column */
+div.position-relative.d-flex.justify-content-end.comments-section-style {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex: 0 0 8.33333% !important;
+  flex-basis: 8.33333% !important;
+  flex-grow: 1 !important;
+  flex-shrink: 0 !important;
+  justify-content: flex-end !important;
+  max-width: none !important;
+  min-height: 1px !important;
+  padding: 0px 15px !important;
+  position: relative !important;
+  width: auto !important; /* width:none is invalid, so use width: auto */
+}
+
+/* Targeting the comment content container */
+div[class*="js-updated-comment"][class*="comments-section-style"] {
+  box-sizing: border-box !important;
+  flex: 0 0 83.3333% !important;
+  flex-basis: 83.3333% !important;
+  flex-shrink: 0 !important;
+  max-width: 83.3333% !important;
+  margin: 0px 16px !important;
+  padding: 0px 12px !important;
+}
+
+
+
+/*#section-comments .comments-section-style .row > .col-1 {*/
+/*  flex: 1 0 auto !important; !* This allows the column to grow but not shrink past its content size *!*/
+/*  max-width: none !important; !* This overrides any max-width settings *!*/
+/*  width: auto !important; !* This will ensure the column only takes up the space it needs *!*/
+/*  min-width: 50px !important; !* Set a minimum width for your flag icon *!*/
+/*  justify-content: flex-end !important; !* Align content to the end (right side) *!*/
+/*  padding-right: 15px !important; !* Add padding if needed for spacing *!*/
+/*  padding-left: 0 !important; !* Remove left padding if not needed *!*/
+/*}*/
+
+
+
+
+
