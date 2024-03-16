@@ -8,7 +8,7 @@ from comment.models import (
 
 
 class CommentModelAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'posted', 'edited', 'content_type', 'user', 'email', 'urlhash')
+    list_display = ('__str__', 'posted', 'edited', 'content_type', 'user', 'email', 'urlhash', 'view_content_object')
     search_fields = ('content',)
 
     def view_content_object(self, obj):
