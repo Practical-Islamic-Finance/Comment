@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.urls import reverse
+from django.utils.html import format_html
 
 from comment.models import (
     Comment, Flag, FlagInstance, Reaction, ReactionInstance, Follower, BlockedUser, BlockedUserHistory
@@ -8,6 +10,15 @@ from comment.models import (
 class CommentModelAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'posted', 'edited', 'content_type', 'user', 'email', 'urlhash')
     search_fields = ('content',)
+
+    def view_content_object(self, obj):
+        # Get the admin URL for the content object associated with this comment
+        content_type = obj.content_type
+        view_name = f'admin:{content_type.app_label}_{content_type.model}_change'
+        object_url = reverse(view_name, args=(obj.object_id,))
+        return format_html('<a href="{}">View Content Object</a>', object_url)
+
+    view_content_object.short_description = "View Object"
 
     class Meta:
         model = Comment
