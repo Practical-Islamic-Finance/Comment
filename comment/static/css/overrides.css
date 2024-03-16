@@ -32,7 +32,23 @@ div[class*="js-updated-comment"][class*="comments-section-style"] {
   padding: 0px 12px !important;
 }
 
+@media (min-width: 992px) and (max-width: 1180px) {
+  div#buttonPlaceholder.col-sm-3.col-md-2.px-2.m-3.m-sm-0.comments-section-style {
+    max-width: 20%;
+    padding: 8px 8px !important;
+  }
+}
 
+.headerlink {
+    display: none;
+}
+
+/* this css styling is specifically for the Rating styling in the Justification card. this was overridden from the actual css styling which is in the app.css file */
+.card-rating span.badge.bg-green.card-badge {
+margin-bottom:5px;
+font-size: 19.968px;
+line-height: 19.968px;
+}
 
 /*#section-comments .comments-section-style .row > .col-1 {*/
 /*  flex: 1 0 auto !important; !* This allows the column to grow but not shrink past its content size *!*/

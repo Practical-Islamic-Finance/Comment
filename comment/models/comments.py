@@ -36,9 +36,9 @@ class Comment(models.Model):
         username = self.get_username()
         _content = self.content[:20]
         if not self.parent:
-            return f'comment by {username}: {_content}'
+            return f'comment: {_content}'
         else:
-            return f'reply by {username}: {_content}'
+            return f'reply: {_content}'
 
     def __repr__(self):
         return self.__str__()
