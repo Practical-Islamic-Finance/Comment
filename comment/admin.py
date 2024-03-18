@@ -12,20 +12,17 @@ class CommentModelAdmin(admin.ModelAdmin):
     search_fields = ('content',)
 
     def view_content_object(self, obj):
-        # Get the admin URL for the content object associated with this comment
-        content_type = obj.content_type
         content_object = obj.content_object
-        if content_object:
-            if content_type.model == 'stock':
-                # Here 'stock' should be the model name of your Stock model
+        if content_object and content_object.asset_class:
+            asset_class_name = content_object.asset_class.name.lower()
+            if asset_class_name == 'stock':
                 object_url = reverse('stock_details', args=(content_object.ticker,))
-            elif content_type.model == 'crypto':
-                # And 'crypto' should be the model name of your Crypto model
+            elif asset_class_name == 'crypto':
                 object_url = reverse('crypto_details', args=(content_object.slug,))
             else:
                 return "Invalid asset type"
-
             return format_html('<a href="{}" target="_blank">View Asset</a>', object_url)
+
         return "No associated asset"
 
     view_content_object.short_description = "View Asset"
