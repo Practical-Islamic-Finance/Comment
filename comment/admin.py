@@ -14,11 +14,21 @@ class CommentModelAdmin(admin.ModelAdmin):
     def view_content_object(self, obj):
         # Get the admin URL for the content object associated with this comment
         content_type = obj.content_type
-        view_name = f'admin:{content_type.app_label}_{content_type.model}_change'
-        object_url = reverse(view_name, args=(obj.object_id,))
-        return format_html('<a href="{}">View Content Object</a>', object_url)
+        content_object = obj.content_object
+        if content_object:
+            if content_type.model == 'stock':
+                # Here 'stock' should be the model name of your Stock model
+                object_url = reverse('stock_details', args=(content_object.ticker,))
+            elif content_type.model == 'crypto':
+                # And 'crypto' should be the model name of your Crypto model
+                object_url = reverse('crypto_details', args=(content_object.slug,))
+            else:
+                return "Invalid asset type"
 
-    view_content_object.short_description = "View Object"
+            return format_html('<a href="{}" target="_blank">View Asset</a>', object_url)
+        return "No associated asset"
+
+    view_content_object.short_description = "View Asset"
 
     class Meta:
         model = Comment
