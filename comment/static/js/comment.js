@@ -54,10 +54,45 @@ document.addEventListener('DOMContentLoaded', () => {
         hideModal(createAnonymousCommentModal);
     };
 
+    document.querySelectorAll('.js-reply-number').forEach(replyNumberElement => {
+        // This line finds the parent comment container
+        const parentCommentContainer = replyNumberElement.closest('.js-parent-comment');
+        // The replies container directly follows the parent comment container
+        const repliesContainer = parentCommentContainer.nextElementSibling;
+
+        // Check that the next sibling is indeed the replies container
+        if (repliesContainer && repliesContainer.classList.contains('js-replies')) {
+            const replyCount = parseInt(replyNumberElement.textContent, 10);
+
+            // Show or hide the replies container based on the reply count
+            if (replyCount > 0) {
+                repliesContainer.classList.remove('d-none'); // Shows the container if there are replies
+            } else {
+                repliesContainer.classList.add('d-none'); // Hides the container if there are no replies
+            }
+        }
+    });
+
     // show and hide child comments
+    // let replyLink = replyLinkElement => {
+    //     getNthParent(replyLinkElement, 4).nextElementSibling.classList.toggle('d-none');
+    // };
+
     let replyLink = replyLinkElement => {
-        getNthParent(replyLinkElement, 4).nextElementSibling.classList.toggle('d-none');
+        let parentElement = getNthParent(replyLinkElement, 4);
+        let repliesContainer = parentElement.nextElementSibling;
+        let replyNumber = parentElement.querySelector('.js-reply-number').textContent;
+
+        // Check if the reply number is greater than 0
+        if (parseInt(replyNumber) > 0) {
+            // If there are replies, ensure the replies container is shown
+            repliesContainer.classList.remove('d-none');
+        } else {
+            // If there are no replies, toggle (which will effectively be the same as hide if it starts off hidden)
+            repliesContainer.classList.toggle('d-none');
+        }
     };
+
 
     // resize the input field according to typed text
     let commentInput = textarea => {

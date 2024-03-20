@@ -44,10 +44,10 @@ div[class*="js-updated-comment"][class*="comments-section-style"] {
 }
 
 /* this css styling is specifically for the Rating styling in the Justification card. this was overridden from the actual css styling which is in the app.css file */
-.card-rating span.badge.bg-green.card-badge {
-margin-bottom:5px;
-font-size: 19.968px;
-line-height: 19.968px;
+.card-rating span.badge.card-badge {
+    margin-bottom: 5px;
+    font-size: 19.968px;
+    line-height: 19.968px;
 }
 
 /*#section-comments .comments-section-style .row > .col-1 {*/
