@@ -3,6 +3,7 @@
 /*jslint plusplus: true */
 document.addEventListener('DOMContentLoaded', () => {
     'use strict';
+    console.log("HELLO WORLD FROM DOCKER CONTAINER");
     let currentDeleteCommentButton, commentBeforeEdit;
     let csrfToken = window.CSRF_TOKEN;
     let deleteModal = document.getElementById("Modal");
