@@ -3,7 +3,6 @@
 /*jslint plusplus: true */
 document.addEventListener('DOMContentLoaded', () => {
     'use strict';
-    console.log("HELLO WORLD FROM DOCKER CONTAINER");
     let currentDeleteCommentButton, commentBeforeEdit;
     let csrfToken = window.CSRF_TOKEN;
     let deleteModal = document.getElementById("Modal");
@@ -55,24 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
         hideModal(createAnonymousCommentModal);
     };
 
-    document.querySelectorAll('.js-reply-number').forEach(replyNumberElement => {
-        // This line finds the parent comment container
-        const parentCommentContainer = replyNumberElement.closest('.js-parent-comment');
-        // The replies container directly follows the parent comment container
-        const repliesContainer = parentCommentContainer.nextElementSibling;
-
-        // Check that the next sibling is indeed the replies container
-        if (repliesContainer && repliesContainer.classList.contains('js-replies')) {
-            const replyCount = parseInt(replyNumberElement.textContent, 10);
-
-            // Show or hide the replies container based on the reply count
-            if (replyCount > 0) {
-                repliesContainer.classList.remove('d-none'); // Shows the container if there are replies
-            } else {
-                repliesContainer.classList.add('d-none'); // Hides the container if there are no replies
-            }
-        }
-    });
 
     // show and hide child comments
     // let replyLink = replyLinkElement => {
@@ -80,19 +61,51 @@ document.addEventListener('DOMContentLoaded', () => {
     // };
 
     let replyLink = replyLinkElement => {
-        let parentElement = getNthParent(replyLinkElement, 4);
-        let repliesContainer = parentElement.nextElementSibling;
-        let replyNumber = parentElement.querySelector('.js-reply-number').textContent;
-
-        // Check if the reply number is greater than 0
-        if (parseInt(replyNumber) > 0) {
-            // If there are replies, ensure the replies container is shown
+        let repliesContainer = getNthParent(replyLinkElement, 4).nextElementSibling;
+        if (repliesContainer.classList.contains('d-none')) {
             repliesContainer.classList.remove('d-none');
-        } else {
-            // If there are no replies, toggle (which will effectively be the same as hide if it starts off hidden)
-            repliesContainer.classList.toggle('d-none');
         }
     };
+
+    // Function to find and expand the replies container
+    // Define a function that expands all replies containers which have replies
+    const expandAllRepliesContainersWithReplies = () => {
+        document.querySelectorAll('.js-reply-number').forEach(replyNumberElement => {
+            const replyCount = parseInt(replyNumberElement.textContent, 10);
+            if (replyCount > 0) {
+                const parentCommentContainer = replyNumberElement.closest('.js-parent-comment');
+                const repliesContainer = parentCommentContainer.querySelector('.js-replies');
+                if (repliesContainer && repliesContainer.classList.contains('d-none')) {
+                    repliesContainer.classList.remove('d-none');
+                }
+            }
+        });
+    };
+
+    // // Target element that will be observed for mutations
+    // const commentsContainer = document.getElementById('comments');
+    //
+    // // Callback function to execute when mutations are observed
+    // const callback = function(mutationsList, observer) {
+    //     for(let mutation of mutationsList) {
+    //         if (mutation.type === 'childList') {
+    //             // Call your function to expand replies
+    //             expandAllRepliesContainersWithReplies();
+    //         }
+    //     }
+    // };
+    //
+    // // Create an observer instance linked to the callback function
+    // const observer = new MutationObserver(callback);
+    //
+    // // Start observing the target node for configured mutations
+    // observer.observe(commentsContainer, { childList: true, subtree: true });
+
+    // Initially expand replies containers with replies
+    expandAllRepliesContainersWithReplies();
+
+
+
 
 
     // resize the input field according to typed text
@@ -247,6 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (formButton.getAttribute('value') === 'parent') {
                 // reload all comments only when posting parent comment
                 document.getElementById("comments").outerHTML = result.data;
+                // Since the DOM has been updated, call the function to re-expand replies
+                expandAllRepliesContainersWithReplies();
             } else {
                 // child comment
                 let childComment = stringToDom(result.data, '.js-child-comment');
@@ -408,6 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (isParent) {
                 document.getElementById("comments").outerHTML = result.data;
+                expandAllRepliesContainersWithReplies();
             } else {
                 // update replies count if a child was deleted
                 let replyNumberElement = getParentByClassName(commentElement, 'js-parent-comment').querySelector(".js-reply-number");
